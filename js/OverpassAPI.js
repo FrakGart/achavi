@@ -5,7 +5,7 @@ function OverpassAPI(loader, bboxControl) {
     this.loader = loader;
     this.bboxControl = bboxControl;
     this.bbox = null;
-    
+
     // http://www.overpass-api.de/augmented_diffs/000/008/066.osc.gz
     // http://www.overpass-api.de/augmented_diffs/id_sorted/000/028/706.osc.gz
     this.sequenceUrlRegex = /.*overpass-api\.de\/augmented_diffs(?:\/id_sorted|)\/([0-9]{3})\/([0-9]{3})\/([0-9]{3}).osc.gz/;
@@ -21,7 +21,7 @@ OverpassAPI.prototype.getSequenceUrl = function(sequence) {
     };
     //var urlFormat = 'http://overpass-api.de/augmented_diffs/${a}/${b}/${c}.osc.gz';
     var urlFormat = 'https://overpass-api.de/augmented_diffs/id_sorted/${a}/${b}/${c}.osc.gz';
-   
+
     var url = OpenLayers.String.format(urlFormat, path);
     return url;
 };
@@ -44,13 +44,13 @@ OverpassAPI.prototype.getCurrentSequence = function () {
 
     OpenLayers.Request.GET({
         url: url,
-        async: false, 
+        async: false,
         // do not send X-Requested-With header (option added by olex.Request-patch)
         disableXRequestedWith: true,
         success: _.bind(function(request) {
             sequence = this.parseSequence(request, url);
         }, this)
-    });        
+    });
     return sequence;
 };
 
@@ -61,13 +61,13 @@ OverpassAPI.prototype.getSequenceByTime = function (timestamp, callback) {
     console.log('requesting state ' + url);
     OpenLayers.Request.GET({
         url: url,
-        async: true, 
+        async: true,
         disableXRequestedWith: true,
         success: _.bind(function(request) {
             var sequence = this.parseSequence(request, url);
             callback(sequence);
         }, this)
-    });        
+    });
 };
 
 OverpassAPI.prototype.getSequenceFromUrl = function (url) {
@@ -117,7 +117,7 @@ OverpassAPI.prototype.loadDiff = function(from, to, relations, query, postLoadCa
     }
     dateRange = '"' + mindate + '"' + maxdate;
 
-    var data_url = 'https://overpass-api.de/api/interpreter';    
+    var data_url = 'https://overpass.private.coffee/api/interpreter';
     if(!query) {
         query = '(node(bbox)(changed);way(bbox)(changed);' + (relations ? 'relation(bbox)(changed);' : '') + ');';
     }
